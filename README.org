@@ -1,0 +1,2 @@
+* openssl_examples
+Basic steps to encrypt/decrypt and hash with openssl
