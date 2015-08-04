@@ -1,2 +1,12 @@
-* openssl_examples
-Basic steps to encrypt/decrypt and hash with openssl
+* Openssl examples
+Sample C++ code with encryption and decryption using the Openssl libraries. A couple of short snippets to generate hashes (md5 and sha256) are also included.
+
+** API
+*** encrypt_and_b64
+Encrypts the supplied C++ string and returns (via output arguments) a base64 encoded and encrypted message, a base64 encoded and encrypted key and a base64 encoded Initialization Vector (IV).
+*** db64_and_decrypt
+Decrypts the supplied base64 encoded and encrypted message, base64 encoded and encrypted key and base64 encoded key and returns (via an output argument) the decrypted string.
+*** get_md5
+Returns (via output argument) a hex-version of the md5 hash generated for the input string.
+*** get_md5
+Returns (via output argument) a hex-version of the sha256 hash generated for the input string.
