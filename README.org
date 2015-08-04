@@ -8,5 +8,5 @@ Encrypts the supplied C++ string and returns (via output arguments) a base64 enc
 Decrypts the supplied base64 encoded and encrypted message, base64 encoded and encrypted key and base64 encoded key and returns (via an output argument) the decrypted string.
 *** get_md5
 Returns (via output argument) a hex-version of the md5 hash generated for the input string.
-*** get_md5
+*** get_sha256
 Returns (via output argument) a hex-version of the sha256 hash generated for the input string.

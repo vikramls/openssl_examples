@@ -7,10 +7,47 @@
 #include "openssl/err.h"
 #include "openssl/bio.h"
 #include "openssl/sha.h"
+#include "openssl/md5.h"
 
 #include "crypto.hpp"
 
 using namespace std;
+
+int test_md5()
+{
+  string in1("foobar\n");
+  string in2("hello\n");
+
+  stringstream ss;
+  size_t i=0;
+  unsigned char buf[MD5_DIGEST_LENGTH];
+
+  MD5((unsigned char *)in1.c_str(), in1.size(), buf);
+  ss << hex;
+  for (i=0; i<MD5_DIGEST_LENGTH; i++) {
+    ss << setw(2) << setfill('0') << int(buf[i]);
+  }
+
+  cout << "in1:" << in1 << " -> " << ss.str() << endl;
+  ss << dec;
+  ss.str(""); ss.clear();
+  cout << "Check output with 'echo \"" << "foobar" << "\" | openssl md5" << endl;
+
+  MD5((unsigned char *)in2.c_str(), in2.size(), buf);
+  ss << hex;
+  for (i=0; i<MD5_DIGEST_LENGTH; i++) {
+    ss << setw(2) << setfill('0') << int(buf[i]);    
+  }
+
+  cout << "in2:" << in2 << " -> " << ss.str() << endl;
+  ss << dec;
+  ss.str(""); ss.clear();
+
+  cout << "Check output with 'echo \"" << "hello" << "\" | openssl md5" << endl;
+
+  return 0;
+  
+}
 
 int test_sha256()
 {
@@ -29,10 +66,11 @@ int test_sha256()
   cout << "in1:" << in1 << " -> " << ss.str() << endl;
   ss << dec;
   ss.str(""); ss.clear();
+  cout << "Check output with 'echo \"" << "foobar" << "\" | openssl sha -sha256" << endl;
 
   SHA256((unsigned char *)in2.c_str(), in2.size(), buf);
   ss << hex;
-  for (i=SHA256_DIGEST_LENGTH-1; i!=0; i--) {
+  for (i=0; i<SHA256_DIGEST_LENGTH; i++) {
     ss << setw(2) << setfill('0') << int(buf[i]);    
   }
 
@@ -40,17 +78,7 @@ int test_sha256()
   ss << dec;
   ss.str(""); ss.clear();
 
-  SHA256_CTX sha;
-  SHA256_Init(&sha);
-  SHA256_Update(&sha, in1.c_str(), in1.size());
-  SHA256_Final(buf, &sha);
-  ss << hex;
-  for (i=0; i<SHA256_DIGEST_LENGTH; i++) {
-    ss << setw(2) << setfill('0') << (int)buf[i];
-  }
-  cout << "in1:" << in1 << " -> " << ss.str() << endl;
-  ss << dec;
-  ss.str(""); ss.clear();
+  cout << "Check output with 'echo \"" << "hello" << "\" | openssl sha -sha256" << endl;
 
   return 0;
 }
@@ -106,5 +134,7 @@ int test_encr_decr()
 int main()
 {
   test_encr_decr();
+  test_md5();
+  test_sha256();
   return 0;
 }
