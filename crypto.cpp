@@ -43,6 +43,8 @@ Crypto::~Crypto()
 
   if (evp_rsa_priv)
     EVP_PKEY_free(evp_rsa_priv);
+
+  CRYPTO_cleanup_all_ex_data();
 }
 
 /*! \brief Create RSA public key container to use during encryption
