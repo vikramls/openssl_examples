@@ -26,7 +26,7 @@ int test_md5()
 
   cr.get_md5(in2, in2_md5);
     
-  cout << "INFO: md5(" << in2 << ") = " << in2_md5 << endl;
+  cout << "INFO: md5(" << in2 << ") =  " << in2_md5 << endl;
   cout << "INFO: Check output with 'echo -n \"" << in2 << "\" | openssl md5" << endl;
   return 0;
 }
@@ -43,7 +43,7 @@ int test_sha256()
   cout << "INFO: sha256(" << in1 << ") = " << in1_sha256 << endl; 
   cout << "INFO: Check output with 'echo -n \"" << in1 << "\" | openssl sha -sha256" << endl;
   cr.get_sha256(in2, in2_sha256);
-  cout << "INFO: sha256(" << in2 << ") = (" << in2_sha256 << endl; 
+  cout << "INFO: sha256(" << in2 << ") =  " << in2_sha256 << endl; 
   cout << "INFO: Check output with 'echo -n \"" << in2 << "\" | openssl sha -sha256" << endl;
 
   return 0;
