@@ -71,7 +71,7 @@ int test_encr_decr()
 {
   CRYPTO_RESULT rv=CRYPTO_SUCCESS;
 
-  std::string in("HELLO, WORLD! WELCOME TO OUR OPENSSL OVERLORDS!!");
+  std::string in("HELLO, WORLD! WELCOME TO OUR OPENSSL OVERLORDS!!!!!");
   std::cout << "INFO: PLAINTEXT=" << in << ", size=" << in.size() << endl;
   std::string msg_b64, ek_b64, iv_b64;
 

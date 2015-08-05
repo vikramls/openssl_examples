@@ -208,12 +208,6 @@ CRYPTO_RESULT Crypto::encrypt_and_b64(std::string &input, std::string &msg_b64, 
   unsigned char output[input.size() + EVP_MAX_IV_LENGTH];
   int output_len=0, tmp_len=0;
 
-  /* Let's ensure input is a multiple of 16 */
-  int r = int(input.size() % 16);
-  if (r) {
-    input.append(16-r, '@');
-  }
-
   EVP_CIPHER_CTX ctx;
   EVP_CIPHER_CTX_init(&ctx);
   
@@ -317,21 +311,14 @@ CRYPTO_RESULT Crypto::db64_and_decrypt(std::string const &msg_b64, std::string c
     std::cout << "ERROR: db64_and_decrypt(): EVP_OpenUpdate failed" << std::endl;
     ERR_print_errors_fp(stderr);
   }
-    
-  if (out_buf_len > msg_e_len) {
-    out.append((const char *)out_buf, msg_e_len);
-  }
-  else {
-    out.append((const char *)out_buf, out_buf_len);
-    
-    if (!EVP_OpenFinal(&ctxd, out_buf, &out_buf_len) ){
-      std::cout << "ERROR: EVP_OpenFinal failed" << std::endl;
-      ERR_print_errors_fp(stderr);
-    }
-    if (out_buf_len)
-      out.append((const char *)out_buf, out_buf_len);
-  }
 
+  out.append((const char *)out_buf, out_buf_len);
+  if (!EVP_OpenFinal(&ctxd, out_buf, &out_buf_len) ){
+    std::cout << "ERROR: EVP_OpenFinal failed" << std::endl;
+    ERR_print_errors_fp(stderr);
+  }
+  out.append((const char *)out_buf, out_buf_len);
+  
   EVP_CIPHER_CTX_cleanup(&ctxd);
   free (out_buf);
   free (msg_e);
