@@ -15,70 +15,36 @@ using namespace std;
 
 int test_md5()
 {
-  string in1("foobar\n");
-  string in2("hello\n");
+  string in1("foobar"), in1_md5;
+  string in2("hello"), in2_md5;
 
-  stringstream ss;
-  size_t i=0;
-  unsigned char buf[MD5_DIGEST_LENGTH];
-
-  MD5((unsigned char *)in1.c_str(), in1.size(), buf);
-  ss << hex;
-  for (i=0; i<MD5_DIGEST_LENGTH; i++) {
-    ss << setw(2) << setfill('0') << int(buf[i]);
-  }
-
-  cout << "in1:" << in1 << " -> " << ss.str() << endl;
-  ss << dec;
-  ss.str(""); ss.clear();
-  cout << "Check output with 'echo \"" << "foobar" << "\" | openssl md5" << endl;
-
-  MD5((unsigned char *)in2.c_str(), in2.size(), buf);
-  ss << hex;
-  for (i=0; i<MD5_DIGEST_LENGTH; i++) {
-    ss << setw(2) << setfill('0') << int(buf[i]);    
-  }
-
-  cout << "in2:" << in2 << " -> " << ss.str() << endl;
-  ss << dec;
-  ss.str(""); ss.clear();
-
-  cout << "Check output with 'echo \"" << "hello" << "\" | openssl md5" << endl;
-
-  return 0;
+  Crypto cr;
+  cr.get_md5(in1, in1_md5);
   
+  cout << "INFO: md5(" << in1 << ") = " << in1_md5 << endl;
+  cout << "INFO: Check output with 'echo -n \"" << in1 << "\" | openssl md5" << endl;
+
+  cr.get_md5(in2, in2_md5);
+    
+  cout << "INFO: md5(" << in2 << ") = " << in2_md5 << endl;
+  cout << "INFO: Check output with 'echo -n \"" << in2 << "\" | openssl md5" << endl;
+  return 0;
 }
 
 int test_sha256()
 {
-  string in1("foobar\n");
-  string in2("hello\n");
-  stringstream ss;
-  size_t i=0;
-  unsigned char buf[SHA256_DIGEST_LENGTH];
+  string in1("foobar");
+  string in1_sha256;
+  string in2("hello");
+  string in2_sha256;
 
-  SHA256((unsigned char *)in1.c_str(), in1.size(), buf);
-  ss << hex;
-  for (i=0; i<SHA256_DIGEST_LENGTH; i++) {
-    ss << setw(2) << setfill('0') << int(buf[i]);
-  }
-
-  cout << "in1:" << in1 << " -> " << ss.str() << endl;
-  ss << dec;
-  ss.str(""); ss.clear();
-  cout << "Check output with 'echo \"" << "foobar" << "\" | openssl sha -sha256" << endl;
-
-  SHA256((unsigned char *)in2.c_str(), in2.size(), buf);
-  ss << hex;
-  for (i=0; i<SHA256_DIGEST_LENGTH; i++) {
-    ss << setw(2) << setfill('0') << int(buf[i]);    
-  }
-
-  cout << "in2:" << in2 << " -> " << ss.str() << endl;
-  ss << dec;
-  ss.str(""); ss.clear();
-
-  cout << "Check output with 'echo \"" << "hello" << "\" | openssl sha -sha256" << endl;
+  Crypto cr;
+  cr.get_sha256(in1, in1_sha256);
+  cout << "INFO: sha256(" << in1 << ") = " << in1_sha256 << endl; 
+  cout << "INFO: Check output with 'echo -n \"" << in1 << "\" | openssl sha -sha256" << endl;
+  cr.get_sha256(in2, in2_sha256);
+  cout << "INFO: sha256(" << in2 << ") = (" << in2_sha256 << endl; 
+  cout << "INFO: Check output with 'echo -n \"" << in2 << "\" | openssl sha -sha256" << endl;
 
   return 0;
 }

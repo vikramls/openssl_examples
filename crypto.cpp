@@ -343,17 +343,34 @@ CRYPTO_RESULT Crypto::db64_and_decrypt(std::string const &msg_b64, std::string c
 CRYPTO_RESULT Crypto::get_md5(std::string const &in, std::string &md5)
 {
   unsigned char buf[MD5_DIGEST_LENGTH];
+  std::stringstream ss;
+  size_t i=0;
   
   MD5((unsigned char *)in.c_str(), in.size(), buf);
+  ss << std::hex;
+  for (i=0; i<MD5_DIGEST_LENGTH; i++) {
+    ss << std::setw(2) << std::setfill('0') << int(buf[i]);
+  }
+  
+  md5 = ss.str();
+  ss << std::dec;
   return CRYPTO_SUCCESS;
 }
 
 CRYPTO_RESULT Crypto::get_sha256(std::string const &in, std::string &sha256)
 {
   unsigned char buf[SHA256_DIGEST_LENGTH];
-
+  std::stringstream ss;
+  size_t i=0;
+  
   SHA256((unsigned char *)in.c_str(), in.size(), buf);
-
+  ss << std::hex;
+  for (i=0; i<SHA256_DIGEST_LENGTH; i++) {
+    ss << std::setw(2) << std::setfill('0') << int(buf[i]);
+  }
+  
+  sha256 = ss.str();
+  ss << std::dec;
   return CRYPTO_SUCCESS;
 }
 
